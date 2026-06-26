@@ -1,0 +1,72 @@
+2026-06-25 22:20:45,072 - INFO - Iniciando fragmentacion de 19 archivos markdown.
+2026-06-25 22:20:45,080 - INFO - Fragmentacion exitosa: 15_Cirugia-bariatrica-Opciones-quirurgicas-y-resultados.md (149 chunks)
+2026-06-25 22:20:45,082 - INFO - Fragmentacion exitosa: 18_Tecnologias-emergentes-y-medicina-virtual-para-el-tratamiento-de-la-obesidad.md (34 chunks)
+2026-06-25 22:20:45,089 - INFO - Fragmentacion exitosa: 11_La-atencion-y-asistencia-primaria-en-el-manejo-de-la-obesidad.md (149 chunks)
+2026-06-25 22:20:45,097 - INFO - Fragmentacion exitosa: 06_Evaluacion-del-paciente-que-vive-con-obesidad.md (198 chunks)
+2026-06-25 22:20:45,101 - INFO - Fragmentacion exitosa: 09_La-actividad-fisica-en-el-tratamiento-de-la-obesidad.md (105 chunks)
+2026-06-25 22:20:45,105 - INFO - Fragmentacion exitosa: 12_Control-del-peso-durante-la-edad-reproductiva-de-las-mujeres-adultas-con-obesidad.md (113 chunks)
+2026-06-25 22:20:45,110 - INFO - Fragmentacion exitosa: 07_El-rol-de-la-salud-mental-en-el-tratamiento-de-la-obesidad.md (144 chunks)
+2026-06-25 22:20:45,114 - INFO - Fragmentacion exitosa: 14_Cirugia-Bariatrica-Seleccion-y-estudio-preoperatorio.md (100 chunks)
+2026-06-25 22:20:45,115 - INFO - Fragmentacion exitosa: articulo.md (38 chunks)
+2026-06-25 22:20:45,124 - INFO - Fragmentacion exitosa: 08_Terapia-de-nutricion-medica-de-la-obesidad.md (247 chunks)
+2026-06-25 22:20:45,127 - INFO - Fragmentacion exitosa: 03_La-ciencia-de-la-obesidad.md (75 chunks)
+2026-06-25 22:20:45,130 - INFO - Fragmentacion exitosa: 05_Facilitar-la-participacion-en-las-actividades-de-la-vida-diaria-de-las-personas-con-obesidad.md (100 chunks)
+2026-06-25 22:20:45,131 - INFO - Fragmentacion exitosa: 02_Epidemiologia-de-la-obesidad-en-adultos-en-Chile.md (46 chunks)
+2026-06-25 22:20:45,137 - INFO - Fragmentacion exitosa: 10_Intervenciones-psicologicas-y-conductuales-eficaces-en-el-tratamiento-de-la-obesidad.md (163 chunks)
+2026-06-25 22:20:45,140 - INFO - Fragmentacion exitosa: 04_Prevencion-y-reduccion-de-danos-de-la-obesidad-en-personas-adultas.md (96 chunks)
+2026-06-25 22:20:45,141 - INFO - Fragmentacion exitosa: 17_Productos-y-programas-comerciales-para-el-control-de-la-obesidad.md (38 chunks)
+2026-06-25 22:20:45,170 - INFO - Fragmentacion exitosa: 16_Cirugia-bariatrica-Tratamiento-postoperatorio.md (207 chunks)
+2026-06-25 22:20:45,173 - INFO - Fragmentacion exitosa: 01_Practicas-y-politicas-para-reducir-los-sesgos-sobre-el-peso-en-el-manejo-de-la-obesidad-1.md (76 chunks)
+2026-06-25 22:20:45,178 - INFO - Fragmentacion exitosa: 13_Farmacoterapia-en-el-tratamiento-de-la-obesidad.md (138 chunks)
+2026-06-25 22:20:45,178 - INFO - Fragmentacion global completada. Total de chunks generados: 2216
+2026-06-25 22:20:45,183 - INFO - Conectando a ChromaDB persistente en: ./rag_chroma_db
+2026-06-25 22:20:45,250 - INFO - Cargando modelo SentenceTransformer: intfloat/multilingual-e5-small en cpu
+2026-06-25 22:20:46,065 - INFO - Loading SentenceTransformer model from intfloat/multilingual-e5-small.
+2026-06-25 22:20:52,038 - INFO - Iniciando vectorizacion nativa por lotes. Total de fragmentos: 2216
+2026-06-25 22:20:53,287 - INFO - Lote insertado exitosamente: 50/2216
+2026-06-25 22:20:54,558 - INFO - Lote insertado exitosamente: 100/2216
+2026-06-25 22:20:56,150 - INFO - Lote insertado exitosamente: 150/2216
+2026-06-25 22:20:57,507 - INFO - Lote insertado exitosamente: 200/2216
+2026-06-25 22:20:58,663 - INFO - Lote insertado exitosamente: 250/2216
+2026-06-25 22:20:59,811 - INFO - Lote insertado exitosamente: 300/2216
+2026-06-25 22:21:01,099 - INFO - Lote insertado exitosamente: 350/2216
+2026-06-25 22:21:02,175 - INFO - Lote insertado exitosamente: 400/2216
+2026-06-25 22:21:03,484 - INFO - Lote insertado exitosamente: 450/2216
+2026-06-25 22:21:05,257 - INFO - Lote insertado exitosamente: 500/2216
+2026-06-25 22:21:06,959 - INFO - Lote insertado exitosamente: 550/2216
+2026-06-25 22:21:08,013 - INFO - Lote insertado exitosamente: 600/2216
+2026-06-25 22:21:09,696 - INFO - Lote insertado exitosamente: 650/2216
+2026-06-25 22:21:10,795 - INFO - Lote insertado exitosamente: 700/2216
+2026-06-25 22:21:12,519 - INFO - Lote insertado exitosamente: 750/2216
+2026-06-25 22:21:13,674 - INFO - Lote insertado exitosamente: 800/2216
+2026-06-25 22:21:14,900 - INFO - Lote insertado exitosamente: 850/2216
+2026-06-25 22:21:16,868 - INFO - Lote insertado exitosamente: 900/2216
+2026-06-25 22:21:18,079 - INFO - Lote insertado exitosamente: 950/2216
+2026-06-25 22:21:19,656 - INFO - Lote insertado exitosamente: 1000/2216
+2026-06-25 22:21:21,145 - INFO - Lote insertado exitosamente: 1050/2216
+2026-06-25 22:21:22,403 - INFO - Lote insertado exitosamente: 1100/2216
+2026-06-25 22:21:23,393 - INFO - Lote insertado exitosamente: 1150/2216
+2026-06-25 22:21:24,359 - INFO - Lote insertado exitosamente: 1200/2216
+2026-06-25 22:21:26,108 - INFO - Lote insertado exitosamente: 1250/2216
+2026-06-25 22:21:27,961 - INFO - Lote insertado exitosamente: 1300/2216
+2026-06-25 22:21:29,856 - INFO - Lote insertado exitosamente: 1350/2216
+2026-06-25 22:21:31,447 - INFO - Lote insertado exitosamente: 1400/2216
+2026-06-25 22:21:32,955 - INFO - Lote insertado exitosamente: 1450/2216
+2026-06-25 22:21:34,828 - INFO - Lote insertado exitosamente: 1500/2216
+2026-06-25 22:21:35,983 - INFO - Lote insertado exitosamente: 1550/2216
+2026-06-25 22:21:37,112 - INFO - Lote insertado exitosamente: 1600/2216
+2026-06-25 22:21:38,951 - INFO - Lote insertado exitosamente: 1650/2216
+2026-06-25 22:21:41,245 - INFO - Lote insertado exitosamente: 1700/2216
+2026-06-25 22:21:43,188 - INFO - Lote insertado exitosamente: 1750/2216
+2026-06-25 22:21:45,593 - INFO - Lote insertado exitosamente: 1800/2216
+2026-06-25 22:21:46,773 - INFO - Lote insertado exitosamente: 1850/2216
+2026-06-25 22:21:48,168 - INFO - Lote insertado exitosamente: 1900/2216
+2026-06-25 22:21:49,992 - INFO - Lote insertado exitosamente: 1950/2216
+2026-06-25 22:21:52,384 - INFO - Lote insertado exitosamente: 2000/2216
+2026-06-25 22:21:54,244 - INFO - Lote insertado exitosamente: 2050/2216
+2026-06-25 22:21:56,051 - INFO - Lote insertado exitosamente: 2100/2216
+2026-06-25 22:21:57,386 - INFO - Lote insertado exitosamente: 2150/2216
+2026-06-25 22:21:59,405 - INFO - Lote insertado exitosamente: 2200/2216
+2026-06-25 22:22:00,034 - INFO - Lote insertado exitosamente: 2216/2216
+2026-06-25 22:22:00,034 - INFO - Pipeline de vectorizacion y almacenamiento nativo finalizado.
+2026-06-25 22:22:00,035 - INFO - Realizando prueba de recuperacion con la pregunta: 'obesidad'

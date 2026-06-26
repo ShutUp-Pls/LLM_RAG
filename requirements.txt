@@ -1,0 +1,27 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+# Librerías para la ejecucición de modelos del lenguaje
+torch
+torchvision
+torchaudio
+
+# Librerías para la optimización en la ejecución de los modelos
+transformers
+accelerate
+bitsandbytes
+onnxruntime
+
+# Librerías para Dynamic Ingestion Routing (Docling y Marker)
+docling
+pymupdf
+marker-pdf
+
+# Librerías para Chunking
+langchain
+langchain-text-splitters
+
+# Librerías para embedding
+chromadb
+langchain-chroma
+langchain-huggingface
+sentence-transformers

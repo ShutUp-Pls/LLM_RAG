@@ -1,0 +1,20 @@
+2026-06-25 22:20:13,372 - INFO - Se encontraron 19 archivos para revision inicial.
+2026-06-25 22:20:13,372 - INFO - Archivo omitido por preexistencia: 09_La-actividad-fisica-en-el-tratamiento-de-la-obesidad.pdf
+2026-06-25 22:20:13,372 - INFO - Archivo omitido por preexistencia: 06_Evaluacion-del-paciente-que-vive-con-obesidad.pdf
+2026-06-25 22:20:13,372 - INFO - Archivo omitido por preexistencia: 13_Farmacoterapia-en-el-tratamiento-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 16_Cirugia-bariatrica-Tratamiento-postoperatorio.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 12_Control-del-peso-durante-la-edad-reproductiva-de-las-mujeres-adultas-con-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: articulo.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 04_Prevencion-y-reduccion-de-danos-de-la-obesidad-en-personas-adultas.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 03_La-ciencia-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 02_Epidemiologia-de-la-obesidad-en-adultos-en-Chile.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 05_Facilitar-la-participacion-en-las-actividades-de-la-vida-diaria-de-las-personas-con-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 11_La-atencion-y-asistencia-primaria-en-el-manejo-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 15_Cirugia-bariatrica-Opciones-quirurgicas-y-resultados.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 07_El-rol-de-la-salud-mental-en-el-tratamiento-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 08_Terapia-de-nutricion-medica-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 14_Cirugia-Bariatrica-Seleccion-y-estudio-preoperatorio.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 18_Tecnologias-emergentes-y-medicina-virtual-para-el-tratamiento-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 01_Practicas-y-politicas-para-reducir-los-sesgos-sobre-el-peso-en-el-manejo-de-la-obesidad-1.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 10_Intervenciones-psicologicas-y-conductuales-eficaces-en-el-tratamiento-de-la-obesidad.pdf
+2026-06-25 22:20:13,373 - INFO - Archivo omitido por preexistencia: 17_Productos-y-programas-comerciales-para-el-control-de-la-obesidad.pdf

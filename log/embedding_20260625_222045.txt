@@ -1,0 +1,1 @@
+2026-06-25 22:20:45,072 - INFO - Iniciando motor de vectorizacion nativa.

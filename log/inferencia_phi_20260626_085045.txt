@@ -1,0 +1,69 @@
+2026-06-26 08:50:45,869 - INFO - Inicializando conexiones a bases de datos...
+2026-06-26 08:50:45,931 - INFO - Bases de datos conectadas exitosamente.
+2026-06-26 08:50:45,931 - INFO - Cargando modelo de embeddings: intfloat/multilingual-e5-small en cpu
+2026-06-26 08:50:46,333 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:46,354 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/modules.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:46,542 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config_sentence_transformers.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:46,543 - INFO - Loading SentenceTransformer model from intfloat/multilingual-e5-small.
+2026-06-26 08:50:46,752 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config_sentence_transformers.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:46,961 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:46,981 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/README.md "HTTP/1.1 200 OK"
+2026-06-26 08:50:47,169 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:47,194 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/modules.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:47,378 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:47,401 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:47,586 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:47,900 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:47,924 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:48,326 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:48,526 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:48,735 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:48,944 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:49,157 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:49,180 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:49,362 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:49,383 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:49,571 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:49,597 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:49,779 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:49,801 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:49,988 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:50,008 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:50,197 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:50,406 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-06-26 08:50:51,868 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small "HTTP/1.1 200 OK"
+2026-06-26 08:50:52,114 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:52,136 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:52,395 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small "HTTP/1.1 200 OK"
+2026-06-26 08:50:52,435 - INFO - Configurando cuantizacion a 4-bit mediante bitsandbytes...
+2026-06-26 08:50:52,435 - INFO - Cargando tokenizador y LLM: microsoft/Phi-3.5-mini-instruct en cuda
+2026-06-26 08:50:52,604 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:52,625 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:52,809 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/configuration_phi3.py "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:52,829 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/configuration_phi3.py "HTTP/1.1 200 OK"
+2026-06-26 08:50:53,033 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:53,120 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:53,435 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:53,459 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:53,644 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:53,665 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:53,853 - INFO - HTTP Request: GET https://huggingface.co/api/models/microsoft/Phi-3.5-mini-instruct/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-06-26 08:50:54,166 - INFO - HTTP Request: GET https://huggingface.co/api/models/microsoft/Phi-3.5-mini-instruct/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-06-26 08:50:54,584 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:54,608 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/config.json "HTTP/1.1 200 OK"
+2026-06-26 08:50:54,793 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/configuration_phi3.py "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:54,814 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/configuration_phi3.py "HTTP/1.1 200 OK"
+2026-06-26 08:50:55,002 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/modeling_phi3.py "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:50:55,023 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/modeling_phi3.py "HTTP/1.1 200 OK"
+2026-06-26 08:51:03,058 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 08:51:03,087 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/Phi-3.5-mini-instruct/2fe192450127e6a83f7441aef6e3ca586c338b77/generation_config.json "HTTP/1.1 200 OK"
+2026-06-26 08:51:03,262 - INFO - HTTP Request: HEAD https://huggingface.co/microsoft/Phi-3.5-mini-instruct/resolve/main/custom_generate/generate.py "HTTP/1.1 404 Not Found"
+2026-06-26 08:51:03,269 - INFO - Modelos de IA cargados y listos para inferencia.
+2026-06-26 08:51:44,411 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 08:51:44,599 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 08:51:44,666 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 08:51:44,668 - INFO - Contexto anadido desde parent_id: 6a7c751d-80d5-4667-8854-21c06cafd0f5
+2026-06-26 08:51:44,669 - INFO - Aplicando plantilla de chat de Phi-3.5 y tokenizando...
+2026-06-26 08:51:44,725 - INFO - Generando respuesta con Phi-3.5-mini-instruct...
+2026-06-26 08:51:44,902 - WARNING - You are not running the flash-attention implementation, expect numerical differences.
+2026-06-26 08:53:05,140 - INFO - Respuesta generada exitosamente.

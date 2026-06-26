@@ -1,0 +1,98 @@
+2026-06-26 11:37:39,222 - INFO - Inicializando conexiones a bases de datos de recuperacion...
+2026-06-26 11:37:39,285 - INFO - Bases de datos conectadas exitosamente.
+2026-06-26 11:37:39,286 - INFO - Cargando modelo de embeddings: intfloat/multilingual-e5-small en cpu
+2026-06-26 11:37:39,721 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:39,744 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/modules.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:39,926 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config_sentence_transformers.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:39,927 - INFO - Loading SentenceTransformer model from intfloat/multilingual-e5-small.
+2026-06-26 11:37:40,138 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config_sentence_transformers.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:40,348 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:40,370 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/README.md "HTTP/1.1 200 OK"
+2026-06-26 11:37:40,558 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:40,579 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/modules.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:40,766 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:40,787 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:40,975 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:41,184 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:41,205 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:41,602 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:41,812 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:41,982 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:42,228 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:42,437 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:42,459 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:42,647 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:42,667 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:42,855 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:42,876 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:43,067 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:43,088 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:43,274 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:43,294 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:43,482 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:43,691 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-06-26 11:37:45,362 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small "HTTP/1.1 200 OK"
+2026-06-26 11:37:45,675 - INFO - HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-small/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:45,696 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-small/614241f622f53c4eeff9890bdc4f31cfecc418b3/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:45,944 - INFO - HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-small "HTTP/1.1 200 OK"
+2026-06-26 11:37:46,026 - INFO - Modelo de embeddings cargado exitosamente.
+2026-06-26 11:37:46,026 - INFO - Cargando tokenizador y LLM: Qwen/Qwen2.5-1.5B-Instruct en cuda
+2026-06-26 11:37:46,200 - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:46,220 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:46,407 - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:46,429 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:46,720 - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-1.5B-Instruct/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-06-26 11:37:46,929 - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-1.5B-Instruct/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-06-26 11:37:47,451 - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen2.5-1.5B-Instruct "HTTP/1.1 200 OK"
+2026-06-26 11:37:47,660 - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:47,681 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:48,705 - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-06-26 11:37:48,725 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/generation_config.json "HTTP/1.1 200 OK"
+2026-06-26 11:37:48,726 - INFO - Modelo generativo cargado en memoria y listo.
+2026-06-26 11:37:52,522 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:37:52,535 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:37:52,554 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:37:52,554 - INFO - Contexto anadido desde parent_id: 6a7c751d-80d5-4667-8854-21c06cafd0f5
+2026-06-26 11:37:52,554 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:37:53,474 - INFO - Inferencia completada exitosamente.
+2026-06-26 11:38:23,544 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:38:23,563 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:38:23,564 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:38:23,564 - INFO - Contexto anadido desde parent_id: c0f030f7-506f-409d-9ba7-38ae0a0be92b
+2026-06-26 11:38:23,564 - INFO - Contexto anadido desde parent_id: 59765ec6-4a14-4f82-b8f1-31d0fedddc0c
+2026-06-26 11:38:23,564 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:38:26,360 - INFO - Inferencia completada exitosamente.
+2026-06-26 11:38:37,059 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:38:37,082 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:38:37,083 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:38:37,084 - INFO - Contexto anadido desde parent_id: 1d6bdc32-d357-498e-ae30-a9e09cb6ffbb
+2026-06-26 11:38:37,084 - INFO - Contexto anadido desde parent_id: eeeb445a-83c5-4efc-92cc-ad2606ccf01a
+2026-06-26 11:38:37,084 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:38:39,481 - INFO - Inferencia completada exitosamente.
+2026-06-26 11:39:04,761 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:39:04,779 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:39:04,780 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:39:04,780 - INFO - Contexto anadido desde parent_id: de09337b-449f-4e4d-af4b-e0d7e549d83f
+2026-06-26 11:39:04,780 - INFO - Contexto anadido desde parent_id: f6593d79-413e-40f1-8f80-d94351dbd947
+2026-06-26 11:39:04,780 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:39:06,781 - INFO - Inferencia completada exitosamente.
+2026-06-26 11:39:19,806 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:39:19,821 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:39:19,823 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:39:19,823 - INFO - Contexto anadido desde parent_id: 938ae038-2285-4259-90e3-5620f2db1f0b
+2026-06-26 11:39:19,823 - INFO - Contexto anadido desde parent_id: 6760fa17-e2fb-4d60-8156-3094b96dc983
+2026-06-26 11:39:19,823 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:39:20,930 - INFO - Inferencia completada exitosamente.
+2026-06-26 11:39:36,818 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:39:36,831 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:39:36,832 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:39:36,832 - INFO - Contexto anadido desde parent_id: 6a7c751d-80d5-4667-8854-21c06cafd0f5
+2026-06-26 11:39:36,832 - INFO - Contexto anadido desde parent_id: fc03fcfb-3faf-407e-a8b7-dbce8c121fcd
+2026-06-26 11:39:36,832 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:39:38,484 - INFO - Inferencia completada exitosamente.
+2026-06-26 11:39:48,240 - INFO - Vectorizando pregunta del usuario...
+2026-06-26 11:39:48,258 - INFO - Buscando similitud en ChromaDB (Capa Fija - Hijos)...
+2026-06-26 11:39:48,259 - INFO - Recuperando secciones completas en SQLite (Capa Semantica - Padres)...
+2026-06-26 11:39:48,260 - INFO - Contexto anadido desde parent_id: 6a7c751d-80d5-4667-8854-21c06cafd0f5
+2026-06-26 11:39:48,260 - INFO - Iniciando generacion de respuesta LLM...
+2026-06-26 11:39:49,191 - INFO - Inferencia completada exitosamente.

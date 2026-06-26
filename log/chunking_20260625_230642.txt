@@ -1,0 +1,81 @@
+2026-06-25 23:06:42,930 - INFO - Iniciando fragmentacion de 19 archivos markdown.
+2026-06-25 23:06:42,938 - INFO - Fragmentacion exitosa: 15_Cirugia-bariatrica-Opciones-quirurgicas-y-resultados.md (35 padres, 149 hijos)
+2026-06-25 23:06:42,940 - INFO - Fragmentacion exitosa: 18_Tecnologias-emergentes-y-medicina-virtual-para-el-tratamiento-de-la-obesidad.md (12 padres, 34 hijos)
+2026-06-25 23:06:42,948 - INFO - Fragmentacion exitosa: 11_La-atencion-y-asistencia-primaria-en-el-manejo-de-la-obesidad.md (24 padres, 149 hijos)
+2026-06-25 23:06:42,956 - INFO - Fragmentacion exitosa: 06_Evaluacion-del-paciente-que-vive-con-obesidad.md (37 padres, 198 hijos)
+2026-06-25 23:06:42,961 - INFO - Fragmentacion exitosa: 09_La-actividad-fisica-en-el-tratamiento-de-la-obesidad.md (17 padres, 105 hijos)
+2026-06-25 23:06:42,965 - INFO - Fragmentacion exitosa: 12_Control-del-peso-durante-la-edad-reproductiva-de-las-mujeres-adultas-con-obesidad.md (19 padres, 113 hijos)
+2026-06-25 23:06:42,970 - INFO - Fragmentacion exitosa: 07_El-rol-de-la-salud-mental-en-el-tratamiento-de-la-obesidad.md (22 padres, 144 hijos)
+2026-06-25 23:06:42,974 - INFO - Fragmentacion exitosa: 14_Cirugia-Bariatrica-Seleccion-y-estudio-preoperatorio.md (21 padres, 100 hijos)
+2026-06-25 23:06:42,975 - INFO - Fragmentacion exitosa: articulo.md (20 padres, 38 hijos)
+2026-06-25 23:06:42,984 - INFO - Fragmentacion exitosa: 08_Terapia-de-nutricion-medica-de-la-obesidad.md (38 padres, 247 hijos)
+2026-06-25 23:06:42,987 - INFO - Fragmentacion exitosa: 03_La-ciencia-de-la-obesidad.md (17 padres, 75 hijos)
+2026-06-25 23:06:42,990 - INFO - Fragmentacion exitosa: 05_Facilitar-la-participacion-en-las-actividades-de-la-vida-diaria-de-las-personas-con-obesidad.md (18 padres, 100 hijos)
+2026-06-25 23:06:42,991 - INFO - Fragmentacion exitosa: 02_Epidemiologia-de-la-obesidad-en-adultos-en-Chile.md (11 padres, 46 hijos)
+2026-06-25 23:06:42,998 - INFO - Fragmentacion exitosa: 10_Intervenciones-psicologicas-y-conductuales-eficaces-en-el-tratamiento-de-la-obesidad.md (28 padres, 163 hijos)
+2026-06-25 23:06:43,001 - INFO - Fragmentacion exitosa: 04_Prevencion-y-reduccion-de-danos-de-la-obesidad-en-personas-adultas.md (20 padres, 96 hijos)
+2026-06-25 23:06:43,003 - INFO - Fragmentacion exitosa: 17_Productos-y-programas-comerciales-para-el-control-de-la-obesidad.md (20 padres, 38 hijos)
+2026-06-25 23:06:43,030 - INFO - Fragmentacion exitosa: 16_Cirugia-bariatrica-Tratamiento-postoperatorio.md (30 padres, 207 hijos)
+2026-06-25 23:06:43,033 - INFO - Fragmentacion exitosa: 01_Practicas-y-politicas-para-reducir-los-sesgos-sobre-el-peso-en-el-manejo-de-la-obesidad-1.md (18 padres, 76 hijos)
+2026-06-25 23:06:43,038 - INFO - Fragmentacion exitosa: 13_Farmacoterapia-en-el-tratamiento-de-la-obesidad.md (31 padres, 138 hijos)
+2026-06-25 23:06:43,038 - INFO - Fragmentacion global completada. Padres: 438 | Hijos: 2216
+2026-06-25 23:06:43,051 - INFO - Almacen de documentos completo creado: 438 padres guardados en ./rag_padres_db.json
+2026-06-25 23:06:43,056 - INFO - Conectando a ChromaDB persistente en: ./rag_chroma_db
+2026-06-25 23:06:43,134 - INFO - Cargando modelo SentenceTransformer: intfloat/multilingual-e5-small en cpu
+2026-06-25 23:06:43,854 - INFO - Loading SentenceTransformer model from intfloat/multilingual-e5-small.
+2026-06-25 23:06:49,147 - INFO - Iniciando vectorizacion nativa por lotes. Total de fragmentos hijos: 2216
+2026-06-25 23:06:50,185 - INFO - Lote insertado exitosamente: 50/2216
+2026-06-25 23:06:51,653 - INFO - Lote insertado exitosamente: 100/2216
+2026-06-25 23:06:53,410 - INFO - Lote insertado exitosamente: 150/2216
+2026-06-25 23:06:54,676 - INFO - Lote insertado exitosamente: 200/2216
+2026-06-25 23:06:55,725 - INFO - Lote insertado exitosamente: 250/2216
+2026-06-25 23:06:56,878 - INFO - Lote insertado exitosamente: 300/2216
+2026-06-25 23:06:58,203 - INFO - Lote insertado exitosamente: 350/2216
+2026-06-25 23:06:59,374 - INFO - Lote insertado exitosamente: 400/2216
+2026-06-25 23:07:00,844 - INFO - Lote insertado exitosamente: 450/2216
+2026-06-25 23:07:02,098 - INFO - Lote insertado exitosamente: 500/2216
+2026-06-25 23:07:03,611 - INFO - Lote insertado exitosamente: 550/2216
+2026-06-25 23:07:04,637 - INFO - Lote insertado exitosamente: 600/2216
+2026-06-25 23:07:06,302 - INFO - Lote insertado exitosamente: 650/2216
+2026-06-25 23:07:07,560 - INFO - Lote insertado exitosamente: 700/2216
+2026-06-25 23:07:09,162 - INFO - Lote insertado exitosamente: 750/2216
+2026-06-25 23:07:10,254 - INFO - Lote insertado exitosamente: 800/2216
+2026-06-25 23:07:11,513 - INFO - Lote insertado exitosamente: 850/2216
+2026-06-25 23:07:13,180 - INFO - Lote insertado exitosamente: 900/2216
+2026-06-25 23:07:14,160 - INFO - Lote insertado exitosamente: 950/2216
+2026-06-25 23:07:15,765 - INFO - Lote insertado exitosamente: 1000/2216
+2026-06-25 23:07:17,466 - INFO - Lote insertado exitosamente: 1050/2216
+2026-06-25 23:07:18,819 - INFO - Lote insertado exitosamente: 1100/2216
+2026-06-25 23:07:19,801 - INFO - Lote insertado exitosamente: 1150/2216
+2026-06-25 23:07:20,816 - INFO - Lote insertado exitosamente: 1200/2216
+2026-06-25 23:07:22,417 - INFO - Lote insertado exitosamente: 1250/2216
+2026-06-25 23:07:24,089 - INFO - Lote insertado exitosamente: 1300/2216
+2026-06-25 23:07:25,908 - INFO - Lote insertado exitosamente: 1350/2216
+2026-06-25 23:07:27,526 - INFO - Lote insertado exitosamente: 1400/2216
+2026-06-25 23:07:29,152 - INFO - Lote insertado exitosamente: 1450/2216
+2026-06-25 23:07:30,832 - INFO - Lote insertado exitosamente: 1500/2216
+2026-06-25 23:07:32,091 - INFO - Lote insertado exitosamente: 1550/2216
+2026-06-25 23:07:33,275 - INFO - Lote insertado exitosamente: 1600/2216
+2026-06-25 23:07:35,258 - INFO - Lote insertado exitosamente: 1650/2216
+2026-06-25 23:07:36,852 - INFO - Lote insertado exitosamente: 1700/2216
+2026-06-25 23:07:38,370 - INFO - Lote insertado exitosamente: 1750/2216
+2026-06-25 23:07:39,947 - INFO - Lote insertado exitosamente: 1800/2216
+2026-06-25 23:07:41,156 - INFO - Lote insertado exitosamente: 1850/2216
+2026-06-25 23:07:42,390 - INFO - Lote insertado exitosamente: 1900/2216
+2026-06-25 23:07:43,584 - INFO - Lote insertado exitosamente: 1950/2216
+2026-06-25 23:07:45,650 - INFO - Lote insertado exitosamente: 2000/2216
+2026-06-25 23:07:47,391 - INFO - Lote insertado exitosamente: 2050/2216
+2026-06-25 23:07:49,130 - INFO - Lote insertado exitosamente: 2100/2216
+2026-06-25 23:07:50,437 - INFO - Lote insertado exitosamente: 2150/2216
+2026-06-25 23:07:52,383 - INFO - Lote insertado exitosamente: 2200/2216
+2026-06-25 23:07:53,011 - INFO - Lote insertado exitosamente: 2216/2216
+2026-06-25 23:07:53,011 - INFO - Pipeline de vectorizacion y almacenamiento Parent-Child finalizado con exito.
+2026-06-25 23:07:53,012 - INFO - Iniciando prueba de recuperacion simulando flujo Parent-Child. Query: 'obesidad'
+2026-06-25 23:07:53,040 - INFO - --- MATCH ENCONTRADO EN LA CAPA FIJA (HIJO) ---
+2026-06-25 23:07:53,040 - INFO - Distancia/Similitud registrada en la consulta.
+2026-06-25 23:07:53,040 - INFO - Metadata Hijo: {'parent_id': '4de144ce-6df6-44ef-b6f3-a70db58d80cf', 'Header_2': 'DEFINICIÓN DE OBESIDAD', 'fuente': '06_Evaluacion-del-paciente-que-vive-con-obesidad.md'}
+2026-06-25 23:07:53,040 - INFO - Extracto del Hijo: ## DEFINICIÓN DE OBESIDAD...
+2026-06-25 23:07:53,040 - INFO - --- RECUPERACION DE CAPA SEMANTICA (PADRE) EXITOSA ---
+2026-06-25 23:07:53,040 - INFO - ID del Padre: 4de144ce-6df6-44ef-b6f3-a70db58d80cf
+2026-06-25 23:07:53,040 - INFO - Extracto del Padre (El texto que ira a Qwen): ## DEFINICIÓN DE OBESIDAD  
+La obesidad es una enfermedad crónica compleja en la que el exceso de grasa corporal (adiposidad) perjudica la salud, aumenta el riesgo de complicaciones médicas a largo plazo y reduce la esperanza de vida. 22-27 La  obesidad  se  ha  considerado  tradicionalmente  como u...

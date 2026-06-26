@@ -1,0 +1,7 @@
+2026-06-25 23:37:11,983 - INFO - Inicializando conexiones a bases de datos...
+2026-06-25 23:37:12,067 - INFO - Bases de datos conectadas exitosamente.
+2026-06-25 23:37:12,067 - INFO - Cargando modelo de embeddings: intfloat/multilingual-e5-small en cpu
+2026-06-25 23:37:12,816 - INFO - Loading SentenceTransformer model from intfloat/multilingual-e5-small.
+2026-06-25 23:37:17,714 - INFO - Configurando cuantizacion a 4-bit mediante bitsandbytes...
+2026-06-25 23:37:17,715 - INFO - Cargando tokenizador y LLM: microsoft/Phi-3.5-mini-instruct en cuda
+2026-06-25 23:37:31,487 - CRITICAL - Fallo critico al iniciar el sistema: Calling `to()` is not supported for `4-bit` quantized models with the installed version of bitsandbytes. The current device is `cuda:0`. If you intended to move the model, please install bitsandbytes >= 0.43.2.

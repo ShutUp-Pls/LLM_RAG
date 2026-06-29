@@ -1,24 +1,36 @@
 import sys
+from llms.agente import Agente
 from llms.qwen import QwenLocal
 
-def ejecutar_diagnostico_aislado() -> None:
-    print("Iniciando carga de prueba para QwenLocal...")
+from rag.rag_retrieval import Retrieval
+from rag.utils.logger import configurar_sistema_registros
+
+def ejecutar_diagnostico_integrado() -> None:
     llm = QwenLocal()
     llm.inicializar_modelo()
     
-    contexto_test = "Chile es un país ubicado en el extremo sudoeste de América del Sur. Su capital oficial es Santiago."
-    print(f"Contexto simulado: {contexto_test}")
-
-    pregunta_test_uno = "¿Cuál es la capital oficial de Chile?"
-    pregunta_test_dos = "¿Cuál es la capital oficial de Argentina?"
+    retriever = Retrieval()
+    retriever.preparar_recuperador()
     
-    print(f"\nPregunta de prueba: {pregunta_test_uno}")
-    respuesta = llm.generar_respuesta(pregunta_test_uno, contexto_test)
-    print(f"Respuesta obtenida del LLM:\n{respuesta}\n")
+    agente = Agente(llm, retriever)
 
-    print(f"\nPregunta de prueba: {pregunta_test_dos}")
-    respuesta = llm.generar_respuesta(pregunta_test_dos, contexto_test)
-    print(f"Respuesta obtenida del LLM:\n{respuesta}\n")
+    consultas_test = [
+        "¡Hola buenas tardes! ¿Qué tal todo por ahí?", 
+        "¿Cuáles son los principales hallazgos o datos sobre la obesidad?",
+        "Escribe una función de ordenamiento burbuja en Python.",
+        "Mi perro tiene un gato mascota."
+    ]
+    
+    for consulta in consultas_test:
+        print("=" * 70)
+        print(f"Consulta entrante: '{consulta}'")
+
+        respuesta = agente.procesar_consulta(consulta)
+        
+        print(f"\n-> Respuesta final del sistema:\n{respuesta}\n")
+
+    retriever.cerrar_recursos()
 
 if __name__ == "__main__":
-    ejecutar_diagnostico_aislado()
+    configurar_sistema_registros("agente")
+    ejecutar_diagnostico_integrado()

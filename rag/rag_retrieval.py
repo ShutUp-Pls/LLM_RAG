@@ -6,6 +6,7 @@ from sentence_transformers import SentenceTransformer
 from rag import (
     DIR_CHROMA_DB,
     DB_SQLITE_PADRES,
+    DB_SQLITE_CATALOGO,
     EMBEDDING_NOMBRE_COLECCION,
     EMBEDDING_MODELO,
     EMBEDDING_DISPOSITIVO,
@@ -17,12 +18,14 @@ class Retrieval:
         self,
         dir_chroma: Path = DIR_CHROMA_DB,
         db_padres: str = DB_SQLITE_PADRES,
+        db_catalogo: str = DB_SQLITE_CATALOGO,
         nombre_coleccion: str = EMBEDDING_NOMBRE_COLECCION,
         modelo_embeddings: str = EMBEDDING_MODELO,
         dispositivo: str = EMBEDDING_DISPOSITIVO
     ):
         self.dir_chroma = Path(dir_chroma)
         self.ruta_sqlite = self.dir_chroma / db_padres
+        self.ruta_sqlite_catalogo = self.dir_chroma / db_catalogo
         self.nombre_coleccion = nombre_coleccion
         self.nombre_modelo = modelo_embeddings
         self.dispositivo = dispositivo
@@ -88,6 +91,35 @@ class Retrieval:
     def cerrar_recursos(self) -> None:
         if self.conexion_sqlite:
             self.conexion_sqlite.close()
+
+    def obtener_catalogo_temas(self) -> str:
+        try:
+            with sqlite3.connect(str(self.ruta_sqlite_catalogo)) as conexion:
+                cursor = conexion.cursor()
+                
+                cursor.execute("CREATE TABLE IF NOT EXISTS catalogo (fuente TEXT PRIMARY KEY, temas TEXT)")
+                
+                cursor.execute('SELECT temas FROM catalogo')
+                resultados = cursor.fetchall()
+                
+            if not resultados: 
+                return "Conocimiento general"
+                
+            temas_unicos = set()
+            for fila in resultados:
+                temas_str = fila[0]
+                if temas_str:
+                    temas = [t.strip().title() for t in temas_str.split(",") if t.strip()]
+                    temas_unicos.update(temas)
+                    
+            if not temas_unicos:
+                return "Conocimiento general"
+                
+            return ", ".join(sorted(temas_unicos))
+            
+        except Exception as e:
+            logging.error(f"Error accediendo a catalogo.sqlite3: {e}")
+            return "Conocimiento general"
 
     def realizar_prueba_recuperacion(self, pregunta_prueba: str = "obesidad") -> None:
         """Prueba interna de recuperación semántica que aísla la lógica de presentación del main."""

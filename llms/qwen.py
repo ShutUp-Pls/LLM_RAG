@@ -5,8 +5,9 @@ import huggingface_hub
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from llms.utils.sys_prompt import construir_prompt_sistema
-from llms.utils.user_prompt import seleccionar_plantilla_usuario
+from llms.utils.prompt_router import construir_prompt_enrutador
+from llms.utils.prompt_sys import construir_prompt_sistema
+from llms.utils.prompt_user import seleccionar_plantilla_usuario
 from llms.base import BaseLLM
 
 from llms import (
@@ -39,7 +40,6 @@ class QwenLocal(BaseLLM):
             acusa_contexto_flexible=True,
             evitar_alucinaciones=True
         )
-        self.prompt_usuario = seleccionar_plantilla_usuario("qwen")
 
     def __aplicar_configuracion_silencio(self) -> None:
         if self.silenciar:
@@ -56,10 +56,31 @@ class QwenLocal(BaseLLM):
             device_map=self.dispositivo
         )
 
-    def __formatear_estructura_mensajes(self, pregunta: str, contexto: str) -> list:
-        contenido_usuario = self.prompt_usuario.format(contexto=contexto, pregunta=pregunta)
+    def __formatear_mensaje(self, consulta: str, contexto: str, requiere_rag: bool) -> list:
+        tipo_prompt = "con_contexto" if requiere_rag else "sin_contexto"
+        plantilla = seleccionar_plantilla_usuario(tipo_prompt)
+        
+        if requiere_rag:
+            contenido_usuario = plantilla.format(contexto=contexto, consulta=consulta)
+        else:
+            contenido_usuario = plantilla.format(consulta=consulta)
+            
         return [
             {"role": "system", "content": self.prompt_sistema},
+            {"role": "user", "content": contenido_usuario}
+        ]
+    
+    def __formatear_mensajes_enrutador(self, consulta: str, evaluar_rag: bool, evaluar_intencion: bool, catalogo_temas: str) -> list:
+        prompt_sistema_router = construir_prompt_enrutador(
+            evaluar_rag=evaluar_rag, 
+            evaluar_intencion=evaluar_intencion,
+            catalogo_temas=catalogo_temas
+        )
+        plantilla_router = seleccionar_plantilla_usuario("sin_contexto")
+        contenido_usuario = plantilla_router.format(consulta=consulta)
+        
+        return [
+            {"role": "system", "content": prompt_sistema_router},
             {"role": "user", "content": contenido_usuario}
         ]
 
@@ -73,10 +94,11 @@ class QwenLocal(BaseLLM):
     def __preparar_tensores_entrada(self, texto_formateado: str) -> dict:
         return self.tokenizer([texto_formateado], return_tensors="pt").to(self.modelo.device)
 
-    def __ejecutar_generacion(self, tensores_entrada: dict) -> torch.Tensor:
+    def __ejecutar_generacion(self, tensores_entrada: dict, max_new_tokens: int = None) -> torch.Tensor:
+        limite_tokens = max_new_tokens if max_new_tokens is not None else self.max_tokens
         return self.modelo.generate(
             **tensores_entrada,
-            max_new_tokens=self.max_tokens,
+            max_new_tokens=limite_tokens,
             temperature=self.temperatura,
             top_p=self.top_p,
             do_sample=True
@@ -86,15 +108,58 @@ class QwenLocal(BaseLLM):
         longitud_prompt = tensores_entrada["input_ids"].shape[1]
         return self.tokenizer.decode(tensores_salida[0][longitud_prompt:], skip_special_tokens=True)
 
+    def __calcular_limite_tokens_enrutador(self, evaluar_rag: bool, evaluar_intencion: bool) -> int:
+        return 10 + (10 * sum([evaluar_rag, evaluar_intencion]))
+
+    def __procesar_respuesta_enrutador(
+            self,
+            respuesta_cruda: str,
+            evaluar_rag: bool,
+            evaluar_intencion: bool
+        ) -> dict:
+        resultados = {}
+        respuesta_mayus = respuesta_cruda.upper()
+        
+        if evaluar_rag:
+            resultados["requiere_rag"] = "RAG: SI" in respuesta_mayus
+            
+        if evaluar_intencion:
+            if "PREGUNTA" in respuesta_mayus: resultados["intencion"] = "PREGUNTA"
+            elif "COMANDO" in respuesta_mayus: resultados["intencion"] = "COMANDO"
+            elif "SALUDO" in respuesta_mayus: resultados["intencion"] = "SALUDO"
+            else: resultados["intencion"] = "DESCONOCIDO"
+            
+        return resultados
+    
     def inicializar_modelo(self) -> None:
         self.__aplicar_configuracion_silencio()
         self.__cargar_componentes_modelo()
-
-    def generar_respuesta(self, pregunta: str, contexto: str) -> str:
-        if not contexto.strip():
-            return "Lo siento, no he encontrado información en mis documentos para responder a esta pregunta."
+    
+    def enrutar_consulta(
+            self,
+            consulta: str,
+            evaluar_rag: bool = True,
+            evaluar_intencion: bool = False,
+            catalogo_temas: str = "No hay temas disponibles"
+        ) -> dict:
+        mensajes = self.__formatear_mensajes_enrutador(consulta, evaluar_rag, evaluar_intencion, catalogo_temas)
+        texto_formateado = self.__convertir_mensajes_a_texto(mensajes)
+        tensores_entrada = self.__preparar_tensores_entrada(texto_formateado)
         
-        mensajes = self.__formatear_estructura_mensajes(pregunta, contexto)
+        limite_tokens = self.__calcular_limite_tokens_enrutador(evaluar_rag, evaluar_intencion)
+        tensores_salida = self.__ejecutar_generacion(tensores_entrada, max_new_tokens=limite_tokens)
+        
+        respuesta_cruda = self.__extraer_y_decodificar_respuesta(tensores_entrada, tensores_salida)
+        
+        return self.__procesar_respuesta_enrutador(respuesta_cruda, evaluar_rag, evaluar_intencion)
+
+    def generar_respuesta(self, consulta: str, contexto: str = "") -> str:
+        requiere_rag = bool(contexto.strip())
+
+        if requiere_rag and not contexto.strip():
+            return "Lo siento, no he encontrado información en mis documentos para responder a esta consulta."
+        
+        mensajes = self.__formatear_mensaje(consulta, contexto, requiere_rag)
         texto_formateado = self.__convertir_mensajes_a_texto(mensajes)
         tensores_entrada = self.__preparar_tensores_entrada(texto_formateado)
         tensores_salida = self.__ejecutar_generacion(tensores_entrada)

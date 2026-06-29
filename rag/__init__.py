@@ -9,6 +9,7 @@ DIR_CHROMA_DB = DIR_BASE / "chroma_db"
 # NOMBRES DE BASES DE DATOS
 DB_SQLITE_PADRES = "padres.sqlite3"
 DB_SQLITE_HIJOS = "hijos.sqlite3"
+DB_SQLITE_CATALOGO = "catalogo.sqlite3"
 
 # CONFIGURACIÓN DE PARSING Y EXTRACCIÓN
 PARSING_EXTENSIONES_SOPORTADAS = ['.docx', '.pptx', '.html', '.md', '.txt']

@@ -7,5 +7,9 @@ class BaseLLM(ABC):
         pass
 
     @abstractmethod
-    def generar_respuesta(self, pregunta: str, contexto: str) -> str:
+    def enrutar_consulta(self, consulta: str, **kwargs) -> dict:
+        pass
+
+    @abstractmethod
+    def generar_respuesta(self, consulta: str, contexto: str = "", **kwargs) -> str:
         pass

@@ -152,6 +152,32 @@ class QwenLocal(BaseLLM):
         respuesta_cruda = self.__extraer_y_decodificar_respuesta(tensores_entrada, tensores_salida)
         
         return self.__procesar_respuesta_enrutador(respuesta_cruda, evaluar_rag, evaluar_intencion)
+    
+    def condensar_contexto(self, consulta: str, contexto_crudo: str) -> str:
+        if not contexto_crudo.strip(): return ""
+
+        prompt_sistema_compresor = (
+            "Eres un extractor de información quirúrgico y ultra preciso.\n"
+            "Tu única tarea es filtrar el contexto proporcionado y extraer EXCLUSIVAMENTE los fragmentos, "
+            "cifras, nombres o citas que sirvan directamente para responder a la consulta del usuario.\n"
+            "Reglas críticas:\n"
+            "1. Elimina explicaciones redundantes, introducciones, paja e historias irrelevantes.\n"
+            "2. Conserva la fidelidad exacta de los datos del texto. No inventes nada.\n"
+            "3. Responde directamente con los datos filtrados reunidos. No agregues comentarios como 'Aquí está el resumen'.\n"
+            "4. Si ninguna parte del contexto sirve para la consulta, devuelve el texto: 'Sin contexto relevante'.\n"
+        )
+
+        prompt_usuario = (
+            f"CONTEXTO CRUDO:\n{contexto_crudo}\n\n"
+            f"CONSULTA DEL USUARIO:\n{consulta}\n"
+        )
+
+        texto_formateado = prompt_sistema_compresor + prompt_usuario
+        tensores_entrada = self.__preparar_tensores_entrada(texto_formateado)
+        tensores_salida = self.__ejecutar_generacion(tensores_entrada, max_new_tokens=256)
+        
+        contexto_condensado = self.__extraer_y_decodificar_respuesta(tensores_entrada, tensores_salida)
+        return contexto_condensado.strip()
 
     def generar_respuesta(self, consulta: str, contexto: str = "") -> str:
         requiere_rag = bool(contexto.strip())

@@ -11,7 +11,7 @@ class Agente:
 
         logging.info("Inicializado correctamente. Catálogo detectado: [%s]", self.catalogo)
 
-    def procesar_consulta(self, consulta: str) -> str:
+    def procesar_consulta(self, consulta: str) -> tuple[str, str]:
         logging.info("Consulta entrante: '%s'", consulta)
 
         analisis = self.llm.enrutar_consulta(
@@ -25,10 +25,17 @@ class Agente:
         
         contexto = ""
         if analisis.get("requiere_rag", False):
-            contexto = self.retriever.obtener_contexto(consulta)
+            contexto_crudo = self.retriever.obtener_contexto(consulta)
+            logging.info("Contexto crudo recuperado. Tamaño: %d caracteres.", len(contexto_crudo))
+            
+            logging.info("Iniciando compresión semántica del contexto...")
+            contexto = self.llm.condensar_contexto(consulta, contexto_crudo)
+            logging.info("Contexto condensado con éxito. Nuevo tamaño: %d caracteres.", len(contexto))
 
-        logging.debug("Iniciando generación de respuesta...")    
-        return self.llm.generar_respuesta(
+        logging.debug("Iniciando generación de respuesta final...")    
+        respuesta = self.llm.generar_respuesta(
             consulta=consulta,
             contexto=contexto
         )
+        
+        return respuesta, contexto

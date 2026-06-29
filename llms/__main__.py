@@ -25,7 +25,7 @@ def ejecutar_diagnostico_integrado() -> None:
         print("=" * 70)
         print(f"Consulta entrante: '{consulta}'")
 
-        respuesta = agente.procesar_consulta(consulta)
+        respuesta, _ = agente.procesar_consulta(consulta)
         
         print(f"\n-> Respuesta final del sistema:\n{respuesta}\n")
 

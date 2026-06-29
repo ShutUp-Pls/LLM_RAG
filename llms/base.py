@@ -11,5 +11,9 @@ class BaseLLM(ABC):
         pass
 
     @abstractmethod
+    def condensar_contexto(self, consulta: str, contexto_crudo: str, **kwargs) -> str:
+        pass
+
+    @abstractmethod
     def generar_respuesta(self, consulta: str, contexto: str = "", **kwargs) -> str:
         pass

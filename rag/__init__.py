@@ -1,0 +1,41 @@
+from pathlib import Path
+
+# RUTAS Y DIRECTORIOS
+DIR_BASE = Path(__file__).resolve().parent
+DIR_ENTRADA_ORG = DIR_BASE / "org"
+DIR_SALIDA_MD = DIR_BASE / "md"
+DIR_CHROMA_DB = DIR_BASE / "chroma_db"
+
+# NOMBRES DE BASES DE DATOS
+DB_SQLITE_PADRES = "padres.sqlite3"
+DB_SQLITE_HIJOS = "hijos.sqlite3"
+
+# CONFIGURACIÓN DE PARSING Y EXTRACCIÓN
+PARSING_EXTENSIONES_SOPORTADAS = ['.docx', '.pptx', '.html', '.md', '.txt']
+DOCLING_TOLERANCIA_DEFECTO = 100
+MARKER_TIEMPO_BASE_SEGUNDOS = 300
+MARKER_MULTIPLICADOR_PESO = 120
+
+# CONFIGURACIÓN DE CHUNKING
+CHUNKING_LIMITE_CARACTERES = 1000
+CHUNKING_SUPERPOSICION = 150
+CHUNKING_JERARQUIA_ENCABEZADOS = [
+    ("#", "Header_1"), 
+    ("##", "Header_2"), 
+    ("###", "Header_3"), 
+    ("####", "Header_4")
+]
+
+# CONFIGURACIÓN DE EMBEDDINGS Y VECTORIZACIÓN
+EMBEDDING_NOMBRE_COLECCION = "conocimiento_qwen"
+EMBEDDING_MODELO = "intfloat/multilingual-e5-small"
+EMBEDDING_TAMANO_LOTE = 50
+EMBEDDING_DISPOSITIVO = "cpu"
+EMBEDDING_SILENCIAR_ADVERTENCIAS = True
+
+# CONFIGURACIÓN DE INFERENCIA
+INFERENCIA_TOP_K = 5
+
+from rag.rag_ingestion import Ingestion
+
+__all__ = ["Ingestion"]

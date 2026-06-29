@@ -1,189 +1,128 @@
-import logging
-import uuid
-import warnings
 import json
-import sqlite3
-from pathlib import Path
-
+import logging
 import chromadb
+import warnings
 import transformers
 import huggingface_hub
+
+from pathlib import Path
+
 from sentence_transformers import SentenceTransformer
 
-from rag.rag_chunking import procesar_directorio_completo_markdown
-from ..logger import configurar_sistema_registros
+from rag.utils.sqlite import GestorSQLite
 
-PREFIJO_LOG = "embedding"
-DIRECTORIO_BASE_DATOS = "./chroma_db"
-RUTA_ALMACEN_PADRES = "./chroma_db/padres.sqlite3"
-NOMBRE_COLECCION = "conocimiento_qwen"
-MODELO_EMBEDDINGS_LOCAL = "intfloat/multilingual-e5-small"
-TAMANO_LOTE_INSERCION = 50
-DISPOSITIVO_EJECUCION = "cpu"
-SILENCIAR_ADVERTENCIAS_LIBRERIAS = True
+from rag import (
+    DIR_CHROMA_DB, 
+    DB_SQLITE_PADRES, 
+    DB_SQLITE_HIJOS,
+    EMBEDDING_NOMBRE_COLECCION, 
+    EMBEDDING_MODELO, 
+    EMBEDDING_TAMANO_LOTE, 
+    EMBEDDING_DISPOSITIVO, 
+    EMBEDDING_SILENCIAR_ADVERTENCIAS
+)
 
-def aplicar_silenciadores_librerias():
-    if SILENCIAR_ADVERTENCIAS_LIBRERIAS:
-        warnings.filterwarnings("ignore")
-        transformers.logging.set_verbosity_error()
-        huggingface_hub.utils.logging.set_verbosity_error()
-        huggingface_hub.utils.disable_progress_bars()
+class Embedding:
+    QUERY_OBTENER_HIJOS = "SELECT id, contenido, metadatos FROM documentos_hijo"
+    QUERY_OBTENER_PADRE_POR_ID = "SELECT contenido FROM documentos_padre WHERE id = ?"
 
-def inicializar_cliente_base_datos():
-    logging.info(f"Conectando a ChromaDB persistente en: {DIRECTORIO_BASE_DATOS}")
-    cliente = chromadb.PersistentClient(path=DIRECTORIO_BASE_DATOS)
-    coleccion = cliente.get_or_create_collection(name=NOMBRE_COLECCION)
-    return coleccion
+    def __init__(
+        self,
+        dir_chroma_db: str | Path = DIR_CHROMA_DB,
+        nombre_coleccion: str = EMBEDDING_NOMBRE_COLECCION,
+        modelo_embeddings: str = EMBEDDING_MODELO,
+        tamano_lote_insercion: int = EMBEDDING_TAMANO_LOTE,
+        dispositivo_ejecucion: str = EMBEDDING_DISPOSITIVO,
+        silenciar_advertencias: bool = EMBEDDING_SILENCIAR_ADVERTENCIAS
+    ):
+        self.tamano_lote = tamano_lote_insercion
+        self.db_padres = GestorSQLite(Path(dir_chroma_db) / DB_SQLITE_PADRES)
+        self.db_hijos = GestorSQLite(Path(dir_chroma_db) / DB_SQLITE_HIJOS)
+        
+        self.__aplicar_silenciadores_entorno(silenciar_advertencias)
+        
+        logging.info(f"Conectando a ChromaDB en: {dir_chroma_db}")
+        self.cliente_chroma = chromadb.PersistentClient(path=str(dir_chroma_db))
+        self.coleccion = self.cliente_chroma.get_or_create_collection(name=nombre_coleccion)
+        
+        logging.info(f"Cargando modelo SentenceTransformer: {modelo_embeddings}")
+        self.modelo_vectorial = SentenceTransformer(modelo_embeddings, device=dispositivo_ejecucion)
 
-def instanciar_modelo_embeddings():
-    logging.info(f"Cargando modelo SentenceTransformer: {MODELO_EMBEDDINGS_LOCAL} en {DISPOSITIVO_EJECUCION}")
-    modelo = SentenceTransformer(MODELO_EMBEDDINGS_LOCAL, device=DISPOSITIVO_EJECUCION)
-    return modelo
+    def __aplicar_silenciadores_entorno(self, activar_silencio: bool) -> None:
+        if activar_silencio:
+            warnings.filterwarnings("ignore")
+            transformers.logging.set_verbosity_error()
+            huggingface_hub.utils.logging.set_verbosity_error()
+            huggingface_hub.utils.disable_progress_bars()
 
-def guardar_padres_sqlite(padres_langchain, ruta_salida):
-    Path(ruta_salida).parent.mkdir(parents=True, exist_ok=True)
-    conexion = sqlite3.connect(ruta_salida)
-    cursor = conexion.cursor()
-    
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS documentos_padre (
-            id TEXT PRIMARY KEY,
-            contenido TEXT NOT NULL,
-            metadatos TEXT
-        )
-    ''')
-    
-    padres_insertados = 0
-    for padre in padres_langchain:
-        id_padre = padre.metadata.get("parent_id")
-        if id_padre:
-            metadatos_json = json.dumps(padre.metadata, ensure_ascii=False)
-            cursor.execute('''
-                INSERT OR REPLACE INTO documentos_padre (id, contenido, metadatos)
-                VALUES (?, ?, ?)
-            ''', (id_padre, padre.page_content, metadatos_json))
-            padres_insertados += 1
+    def __extraer_y_formatear_hijos(self) -> tuple[list, list, list]:
+        registros_crudos = self.db_hijos.obtener_todos(self.QUERY_OBTENER_HIJOS)
+        
+        textos_extraidos, metadatos_extraidos, ids_extraidos = [], [], []
+        for id_hijo, contenido, metadatos_json in registros_crudos:
+            textos_extraidos.append(contenido)
+            metadatos_extraidos.append(json.loads(metadatos_json))
+            ids_extraidos.append(id_hijo)
+
+        return textos_extraidos, metadatos_extraidos, ids_extraidos
+
+    def __vectorizar_e_ingestar_por_lotes(self, textos: list, metadatos: list, ids: list) -> None:
+        total_elementos = len(textos)
+        logging.info(f"Vectorizando hacia ChromaDB. Total de fragmentos: {total_elementos}")
+        
+        for indice in range(0, total_elementos, self.tamano_lote):
+            lote_textos = textos[indice:indice + self.tamano_lote]
+            lote_metadatos = metadatos[indice:indice + self.tamano_lote]
+            lote_ids = ids[indice:indice + self.tamano_lote]
             
-    conexion.commit()
-    conexion.close()
-    logging.info(f"Almacen SQLite actualizado: {padres_insertados} padres guardados en {ruta_salida}")
+            try:
+                vectores = self.modelo_vectorial.encode(lote_textos).tolist()
+                self.coleccion.add(documents=lote_textos, embeddings=vectores, metadatas=lote_metadatos, ids=lote_ids)
+                logging.info(f"Lote insertado: {min(indice + self.tamano_lote, total_elementos)}/{total_elementos}")
+            except Exception as error_insercion:
+                logging.error(f"Fallo crítico insertando lote en índice {indice}: {error_insercion}")
+                raise
 
-def desensamblar_chunks_langchain(chunks_langchain):
-    textos = []
-    metadatos = []
-    ids = []
-    
-    for chunk in chunks_langchain:
-        textos.append(chunk.page_content)
-        metadata_limpia = chunk.metadata if chunk.metadata else {"fuente": "desconocida"}
-        metadatos.append(metadata_limpia)
-        ids.append(str(uuid.uuid4()))
-        
-    return textos, metadatos, ids
+    def ejecutar_pipeline_ingesta(self) -> None:
+        if not self.db_hijos.ruta_db.exists():
+            logging.error("Base de datos de hijos no encontrada. Abortando.")
+            return
 
-def ingestar_por_lotes(coleccion, modelo, textos, metadatos, ids):
-    total_textos = len(textos)
-    logging.info(f"Iniciando vectorizacion nativa por lotes. Total de fragmentos hijos: {total_textos}")
-    
-    for indice in range(0, total_textos, TAMANO_LOTE_INSERCION):
-        lote_textos = textos[indice:indice + TAMANO_LOTE_INSERCION]
-        lote_metadatos = metadatos[indice:indice + TAMANO_LOTE_INSERCION]
-        lote_ids = ids[indice:indice + TAMANO_LOTE_INSERCION]
-        
         try:
-            vectores = modelo.encode(lote_textos).tolist()
-            coleccion.add(
-                documents=lote_textos,
-                embeddings=vectores,
-                metadatas=lote_metadatos,
-                ids=lote_ids
-            )
-            logging.info(f"Lote insertado exitosamente: {indice + len(lote_textos)}/{total_textos}")
-        except Exception as error_lote:
-            logging.error(f"Fallo critico al insertar el lote {indice}: {error_lote}")
-            raise
+            textos, metadatos, ids = self.__extraer_y_formatear_hijos()
+            if not textos:
+                logging.warning("Tabla de hijos vacía.")
+                return
 
-def ejecutar_pipeline_ingesta_nativo():
-    configurar_sistema_registros(PREFIJO_LOG)
-    aplicar_silenciadores_librerias()
-    logging.info("Iniciando motor de vectorizacion y almacenamiento Parent-Child (SQLite).")
-    
-    padres_extraidos, hijos_extraidos = procesar_directorio_completo_markdown()
-    
-    if not padres_extraidos or not hijos_extraidos:
-        logging.warning("No se recibieron fragmentos suficientes. Abortando proceso.")
-        return None, None
+            self.__vectorizar_e_ingestar_por_lotes(textos, metadatos, ids)
+            logging.info("Sincronización finalizada con éxito.")
+        except Exception as error_pipeline:
+            logging.error(f"Ingesta interrumpida: {error_pipeline}")
 
-    try:
-        guardar_padres_sqlite(padres_extraidos, RUTA_ALMACEN_PADRES)
+    def realizar_prueba_integridad(self) -> None:
+        logging.info("Iniciando prueba de integridad relacional (Hijo -> Padre)...")
         
-        textos, metadatos, ids = desensamblar_chunks_langchain(hijos_extraidos)
-        coleccion = inicializar_cliente_base_datos()
-        modelo = instanciar_modelo_embeddings()
+        query_hijo_azar = "SELECT id, parent_id, contenido FROM documentos_hijo ORDER BY RANDOM() LIMIT 1"
+        resultado_hijo = self.db_hijos.obtener_uno(query_hijo_azar)
         
-        ingestar_por_lotes(coleccion, modelo, textos, metadatos, ids)
-        
-        logging.info("Pipeline de vectorizacion y almacenamiento Parent-Child finalizado con exito.")
-        return coleccion, modelo
-    except Exception as error_pipeline:
-        logging.error(f"El proceso de ingesta fue interrumpido: {error_pipeline}")
-        return None, None
-
-def realizar_prueba_recuperacion(coleccion, modelo, pregunta_prueba="obesidad"):
-    logging.info(f"Iniciando prueba de recuperacion. Query: '{pregunta_prueba}'")
-    
-    vector_pregunta = modelo.encode([pregunta_prueba]).tolist()
-    
-    resultados = coleccion.query(
-        query_embeddings=vector_pregunta,
-        n_results=1, 
-        include=["documents", "metadatas", "distances"]
-    )
-    
-    documentos_hijos = resultados["documents"][0]
-    metadatos_hijos = resultados["metadatas"][0]
-    
-    if not documentos_hijos:
-        logging.warning("No se encontraron resultados de busqueda en ChromaDB.")
-        return
-        
-    try:
-        conexion = sqlite3.connect(RUTA_ALMACEN_PADRES)
-        cursor = conexion.cursor()
-    except Exception as error_db:
-        logging.error(f"Fallo al conectar con la base de datos de Padres: {error_db}")
-        return
-
-    for i, (doc_hijo, meta_hijo) in enumerate(zip(documentos_hijos, metadatos_hijos)):
-        logging.info(f"--- MATCH ENCONTRADO EN LA CAPA FIJA (HIJO) ---")
-        logging.info(f"Metadata Hijo: {meta_hijo}")
-        logging.info(f"Extracto del Hijo: {doc_hijo[:150]}...") 
-        
-        parent_id = meta_hijo.get("parent_id")
-        
-        if parent_id:
-            cursor.execute('SELECT contenido, metadatos FROM documentos_padre WHERE id = ?', (parent_id,))
-            resultado_padre = cursor.fetchone()
+        if not resultado_hijo:
+            logging.warning("No hay registros en la base de datos de hijos para realizar la prueba.")
+            return
             
-            if resultado_padre:
-                contenido_padre = resultado_padre[0]
-                metadatos_padre = json.loads(resultado_padre[1])
-                logging.info(f"--- RECUPERACION DE CAPA SEMANTICA (PADRE) EXITOSA ---")
-                logging.info(f"Metadata recuperada del DB: {metadatos_padre}")
-                logging.info(f"Extracto del Padre (El texto que ira a Qwen): {contenido_padre[:300]}...")
-            else:
-                logging.error(f"Inconsistencia referencial: El parent_id {parent_id} no existe en SQLite.")
+        id_hijo, parent_id, contenido_hijo = resultado_hijo
+        logging.info(f"--- MATCH EN SQLITE (HIJO ID: {id_hijo}) ---")
+        logging.info(f"Extracto: {contenido_hijo[:150]}...") 
+        
+        if not parent_id:
+            logging.error("Inconsistencia: El documento hijo no tiene un parent_id asignado.")
+            return
+
+        resultado_padre = self.db_padres.obtener_uno(self.QUERY_OBTENER_PADRE_POR_ID, (parent_id,))
+        
+        if resultado_padre:
+            contenido_padre = resultado_padre[0]
+            logging.info(f"--- MATCH EN SQLITE (PADRE ID: {parent_id}) ---")
+            logging.info(f"Texto íntegro verificado: {contenido_padre[:300]}...")
+            logging.info("Prueba de integridad superada exitosamente.")
         else:
-            logging.error("El hijo recuperado no posee un parent_id valido.")
-
-    conexion.close()
-
-if __name__ == "__main__":
-    coleccion_cargada, modelo_cargado = ejecutar_pipeline_ingesta_nativo()
-    
-    if coleccion_cargada and modelo_cargado:
-        realizar_prueba_recuperacion(
-            coleccion=coleccion_cargada, 
-            modelo=modelo_cargado, 
-            pregunta_prueba="obesidad" 
-        )
+            logging.error(f"Inconsistencia: El parent_id {parent_id} no existe en la tabla documentos_padre.")

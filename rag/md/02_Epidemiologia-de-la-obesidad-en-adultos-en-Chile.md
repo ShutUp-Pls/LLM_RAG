@@ -19,7 +19,9 @@
 
 ## Cómo citar este documento
 
-Epidemiología de la obesidad en personas adultas en Chile. Adaptación de la guía de práctica clínica (Coalición chilena para el estudio de la obesidad, version 1, 2022) por Rodríguez-Osiac L, Navarro-Rosenblatt D, Papapietro K. Capítulo adaptado de: Twells LK, Janssen I, Kuk JL. Canadian Adult Obesity Clinical Practice Guidelines: Epidemiology of Adult Obesity. (version 1, 2020). Disponible en: https://obesitycanada.ca/guidelines/epidemiology. © 2020 Obesity Canada. Disponible en: guiasobesidadchile.com/epidemiologia Fecha de consulta [Fecha].
+Epidemiología de la obesidad en personas adultas en Chile. Adaptación de la guía de práctica clínica (Coalición chilena para el estudio de la obesidad, version 1, 2022) por Rodríguez-Osiac L, Navarro-Rosenblatt D, Papapietro K. Capítulo adaptado de: Twells LK, Janssen I, Kuk JL. Canadian Adult Obesity Clinical Practice Guidelines: Epidemiology of Adult Obesity. (version 1, 2020). Disponible en: https://obesitycanada.ca/guidelines/epidemiology. © 2020 Obesity Canada. Disponible en: guiasobesidadchile.com/epidemiologia
+
+Fecha de consulta [Fecha].
 
 la  sociedad  debido  a  costos  directos  (personal  médico, hospitales,  salas  de  urgencias)  e  indirectos  (reducción  de carga laboral, absentismo, discapacidad) que se estiman en 455 mil millones de pesos para el año 2030.
 

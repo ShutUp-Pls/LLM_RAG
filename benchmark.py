@@ -26,7 +26,7 @@ def ejecutar_benchmark() -> None:
             lector = csv.DictReader(f_in)
             for fila in lector:
                 preguntas.append({
-                    "id": fila['numero'],
+                    "id": fila['id'],
                     "consulta": fila['pregunta']
                 })
     except FileNotFoundError:

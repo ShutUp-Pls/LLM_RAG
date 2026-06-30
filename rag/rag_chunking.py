@@ -20,6 +20,7 @@ from rag import (
     DB_SQLITE_CATALOGO,
     CHUNKING_LIMITE_CARACTERES,
     CHUNKING_SUPERPOSICION,
+    CHUNKING_N_GRAMAS,
     CHUNKING_JERARQUIA_ENCABEZADOS
 )
 
@@ -50,11 +51,12 @@ class Chunking:
         dir_entrada: str | Path = DIR_SALIDA_MD,
         dir_salida: str | Path = DIR_CHROMA_DB,
         limite_caracteres_chunk: int = CHUNKING_LIMITE_CARACTERES,
-        caracteres_superposicion: int = CHUNKING_SUPERPOSICION
+        caracteres_superposicion: int = CHUNKING_SUPERPOSICION,
+        n_gramas: int = CHUNKING_N_GRAMAS
     ):
         self.dir_entrada = Path(dir_entrada)
+        self.n_gramas = n_gramas
         
-        # Gestores de bases de datos
         self.db_padres = GestorSQLite(Path(dir_salida) / DB_SQLITE_PADRES)
         self.db_hijos = GestorSQLite(Path(dir_salida) / DB_SQLITE_HIJOS)
         self.db_catalogo = GestorSQLite(Path(dir_salida) / DB_SQLITE_CATALOGO)
@@ -94,7 +96,7 @@ class Chunking:
             return archivo.read()
 
     def __extraer_temas_automaticos(self, texto: str) -> list:
-        palabras = re.findall(r'\b[a-zA-ZáéíóúÁÉÍÓÚñÑ]{5,}\b', texto.lower())
+        palabras_crudas = re.findall(r'\b[a-zA-ZáéíóúÁÉÍÓÚñÑ]{4,}\b', texto.lower())
         
         stopwords = {
             "sobre", "entre", "desde", "hasta", "puede", "tienen", "cuando", 
@@ -107,16 +109,22 @@ class Chunking:
             "poco", "poca", "estar", "estaba", "estaban", "estuvo", "fueron", 
             "hacer", "hacen", "haciendo", "hecho", "pueden", "haber", "había", 
             "contra", "mediante", "forma", "parte", "lugar", "dicho", "otras", 
-            "otros", "tanto", "tanta", "cada", "tienen", "tiene"
+            "otros", "tanto", "tanta", "cada", "tiene", "sean", "esta", "sino"
         }
         
-        palabras_filtradas = [p for p in palabras if p not in stopwords]
+        palabras_utiles = [p for p in palabras_crudas if p not in stopwords]
         
-        if not palabras_filtradas:
-            return ["Conocimiento general"]
-            
-        frecuencias = Counter(palabras_filtradas)
-        temas_comunes = [palabra.capitalize() for palabra, _ in frecuencias.most_common(5)]
+        if not palabras_utiles: return ["Conocimiento general"]
+
+        lista_ngramas = []
+        for i in range(len(palabras_utiles) - self.n_gramas + 1):
+            ngrama = " ".join(palabras_utiles[i : i + self.n_gramas])
+            lista_ngramas.append(ngrama.title())
+
+        if not lista_ngramas: return [p.title() for p in palabras_utiles[:5]]
+
+        frecuencias = Counter(lista_ngramas)
+        temas_comunes = [tema for tema, _ in frecuencias.most_common(5)]
         
         return temas_comunes
 

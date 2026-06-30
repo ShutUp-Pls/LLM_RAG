@@ -7,8 +7,8 @@ No respondas a la consulta del usuario. Responde ÚNICAMENTE con el formato requ
 CRITERIO_RAG = """
 [ANALISIS_RAG]
 Tu sistema tiene acceso a una base de conocimiento externa con información sobre: [{catalogo_temas}].
-¿La consulta aborda, directa o indirectamente, alguno de estos temas o requiere hechos específicos (RAG: SI)?
-¿O es una charla casual, saludo o comando creativo genérico (RAG: NO)?
+¿La consulta aborda, directa o indirectamente, alguno de los temas antes mencionados (RAG: SI)?
+En cualquier otro caso -> "RAG: NO"
 Responde estrictamente: "RAG: SI" o "RAG: NO".
 """
 

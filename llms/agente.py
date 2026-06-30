@@ -21,7 +21,7 @@ class Agente:
         analisis = self.llm.enrutar_consulta(
             consulta, 
             evaluar_rag=True, 
-            evaluar_intencion=True, 
+            evaluar_intencion=False, 
             catalogo_temas=catalogo_filtrado 
         )
 

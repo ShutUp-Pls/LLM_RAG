@@ -1,3 +1,4 @@
+import re
 import torch
 import warnings
 import logging
@@ -36,9 +37,7 @@ class QwenLocal(BaseLLM):
         
         self.prompt_sistema = construir_prompt_sistema(
             es_corporativo=True,
-            estricto_contexto=False,
-            acusa_contexto_flexible=True,
-            evitar_alucinaciones=True
+            estricto_contexto=True
         )
 
     def __aplicar_configuracion_silencio(self) -> None:
@@ -114,7 +113,7 @@ class QwenLocal(BaseLLM):
         return self.tokenizer.decode(tensores_salida[0][longitud_prompt:], skip_special_tokens=True)
 
     def __calcular_limite_tokens_enrutador(self, evaluar_rag: bool, evaluar_intencion: bool) -> int:
-        return 50 + (25 * sum([evaluar_rag, evaluar_intencion]))
+        return 150 + (25 * sum([evaluar_rag, evaluar_intencion]))
 
     def __procesar_respuesta_enrutador(
             self,
@@ -123,15 +122,29 @@ class QwenLocal(BaseLLM):
             evaluar_intencion: bool
         ) -> dict:
         resultados = {}
+
+        match_razonamiento = re.search(r'RAZONAMIENTO:\s*(.*?)(?=\nDECISION:|$)', respuesta_cruda, re.IGNORECASE | re.DOTALL)
+        if match_razonamiento:
+            razonamiento_texto = match_razonamiento.group(1).strip()
+            logging.debug("Razonamiento del Router: %s", razonamiento_texto)
+        else:
+            logging.debug("Razonamiento del Router: (No se detectó la etiqueta esperada) %s", respuesta_cruda)
+
         respuesta_mayus = respuesta_cruda.upper()
         
         if evaluar_rag:
-            menciona_rag = "RAG" in respuesta_mayus
-            menciona_no = "NO" in respuesta_mayus
-            menciona_si = "SI" in respuesta_mayus or "SÍ" in respuesta_mayus
 
-            if menciona_rag and menciona_no and not menciona_si: resultados["requiere_rag"] = False
-            else: resultados["requiere_rag"] = True
+            match_decision = re.search(r'DECISION:\s*RAG:\s*(SI|SÍ|NO)', respuesta_mayus)
+            
+            if match_decision:
+                decision = match_decision.group(1)
+                resultados["requiere_rag"] = False if "NO" in decision else True
+            else:
+                menciona_rag = "RAG" in respuesta_mayus
+                menciona_no = "NO" in respuesta_mayus
+                menciona_si = "SI" in respuesta_mayus or "SÍ" in respuesta_mayus
+                if menciona_rag and menciona_no and not menciona_si: resultados["requiere_rag"] = False
+                else: resultados["requiere_rag"] = True
             
         if evaluar_intencion:
             if "PREGUNTA" in respuesta_mayus: resultados["intencion"] = "PREGUNTA"

@@ -6,30 +6,23 @@ No respondas a la consulta del usuario. Responde ÚNICAMENTE con el formato requ
 
 CRITERIO_RAG = """
 [ANALISIS_RAG]
-Tu sistema tiene acceso a una base de conocimiento externa con información sobre: [{catalogo_temas}].
-¿La consulta aborda, directa o indirectamente, alguno de los temas antes mencionados (RAG: SI)?
-En cualquier otro caso -> "RAG: NO"
-Responde estrictamente: "RAG: SI" o "RAG: NO".
+Catalogo de temas: [{catalogo_temas}].
+Si la consulta incluye algún tema en el catalogo de temas responde "SI", en cualquier otro caso responde "NO",
+Estructura OBLIGATORIA de tu respuesta (Línea por línea):
+RAZONAMIENTO: <Escribe aquí una breve justificación de 1 o 2 líneas explicando por qué requiere o no usar el catálogo, y el motivo de su intención>
+RAG: <SI o NO>".
 """
 
 CRITERIO_INTENCION = """
 [ANALISIS_INTENCION]
 Clasifica la intención principal de la consulta en una de las siguientes categorías: [PREGUNTA, COMANDO, SALUDO, DESCONOCIDO].
-Responde estrictamente: "INTENCION: <CATEGORIA>".
+Estructura OBLIGATORIA de tu respuesta (Línea por línea):
+INTENCION: <CATEGORIA>.
 """
 
 PROMPT_REFUERZO_ENRUTADOR = """
-Analiza la siguiente consulta y entrega tus resultados línea por línea:
+Responde únicamente con la estructura OBLIGATORIA línea por línea especificadas anteriormente.
 """
-
-'''
-- Para ahorrar computación y sobre todo tokens, era necesario que el modelo sepa discriminar cuando usar o no el sistema RAG,
-llevandonos a un enrutador semantico, ya que para saber si una consulta debe o no usar información adicional hay que entender
-la consulta y su sentido, esto se puede lograr usando el mismo modelo de lenguaje que se pretende usar para responder.
-- A pesar de que por ahora lo escencial era entender la consulta para saber si usar o no el RAG, podrían haber otros criterios
-semanticos interesantes que abordar.
-- Por ende este prompt está pensado para acumular criterios semanticos en una sola consulta.
-'''
 
 def construir_prompt_enrutador(
     evaluar_rag: bool = False,

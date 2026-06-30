@@ -18,14 +18,13 @@ def gestionar_retencion_registros(prefijo_log):
         for archivo_obsoleto in archivos_registro[LIMITE_ARCHIVOS_REGISTRO:]:
             archivo_obsoleto.unlink()
 
-def configurar_sistema_registros(prefijo_log):
+def configurar_sistema_registros(prefijo_log, nivel=logging.DEBUG):
     Path(DIRECTORIO_LOGS).mkdir(parents=True, exist_ok=True)
     gestionar_retencion_registros(prefijo_log)
     marca_tiempo = datetime.now().strftime("%Y%m%d_%H%M%S")
     ruta_registro = Path(DIRECTORIO_LOGS) / f"{prefijo_log}_{marca_tiempo}.txt"
-    
     logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+    logger.setLevel(nivel)
     manejador = logging.FileHandler(ruta_registro, encoding='utf-8')
     formato = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     manejador.setFormatter(formato)

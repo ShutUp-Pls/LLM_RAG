@@ -13,10 +13,18 @@ Si la respuesta no está en el contexto has 1 y 2:
 1. Indica claramente que no tienes la información.
 2. No des información respecto al contexto.
 """
+PROMPT_REGLA_ESTRICTO_CONTEXTO_LAXO = """
+Responde al usuario basandote en el contexto. Usalo como guía sobre que responder.
+"""
 PROMPT_REGLA_CONTEXTO_FLEXIBLE = """
 Utiliza el contexto dado como fuente principal de verdad.
 Puedes apoyarte en tu conocimiento interno si es estrictamente necesario para complementar la respuesta.
 """
+PROMPT_REGLA_CONOCIMIENTO_TECNICO_RESTRINGIDO = """
+Si la respuesta requiere de conocimiento tecnico propio un area profesional, no respondas.
+Indica claramente que se trata de información que debería consultar al profesional correspondiente.
+"""
+
 PROMPT_REGLA_ACUSA_CONTEXTO_FLEXIBLE = """
 Cuando uses conocimiento fuera del contexto dado, indica claramente que parte de tu respuesta no está en el contexto.
 """
@@ -45,11 +53,13 @@ def construir_prompt_sistema(
     es_medico: bool = False,
     es_informal: bool = False,
     estricto_contexto: bool = False,
+    estricto_contexto_laxo: bool = False,
     contexto_irrelevante: bool = False,
     contexto_flexible: bool = False,
     acusa_contexto_flexible: bool = False,
     evitar_alucinaciones: bool = False,
-    formato_estructurado: bool = False
+    formato_estructurado: bool = False,
+    conocimiento_tecnico_restringido: bool = False
 ) -> str:
 
     def __recolectar_roles() -> list:
@@ -62,14 +72,16 @@ def construir_prompt_sistema(
     def __recolectar_reglas_contexto() -> list:
         reglas = []
         if estricto_contexto:       reglas.append(PROMPT_REGLA_ESTRICTO_CONTEXTO)
+        if estricto_contexto_laxo:  reglas.append(PROMPT_REGLA_ESTRICTO_CONTEXTO_LAXO)
         if contexto_irrelevante:    reglas.append(PROMPT_REGLA_CONTEXTO_IRRELEVANTE)
         if contexto_flexible:       reglas.append(PROMPT_REGLA_CONTEXTO_FLEXIBLE)
         return reglas
     
     def __recolectar_reglas_formato() -> list:
         reglas = []
-        if acusa_contexto_flexible: reglas.append(PROMPT_REGLA_ACUSA_CONTEXTO_FLEXIBLE)
-        if formato_estructurado:    reglas.append(PROMPT_REGLA_FORMATO_ESTRUCTURADO)
+        if acusa_contexto_flexible:             reglas.append(PROMPT_REGLA_ACUSA_CONTEXTO_FLEXIBLE)
+        if conocimiento_tecnico_restringido:    reglas.append(PROMPT_REGLA_CONOCIMIENTO_TECNICO_RESTRINGIDO)
+        if formato_estructurado:                reglas.append(PROMPT_REGLA_FORMATO_ESTRUCTURADO)
         return reglas
 
     def __recolectar_reglas_seguridad() -> list:

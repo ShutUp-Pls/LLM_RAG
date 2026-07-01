@@ -28,8 +28,5 @@ def configurar_sistema_registros(prefijo_log, nivel=logging.DEBUG):
     manejador = logging.FileHandler(ruta_registro, encoding='utf-8')
     formato = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     manejador.setFormatter(formato)
-    
-    if logger.hasHandlers():
-        logger.handlers.clear()
-        
+    if logger.hasHandlers(): logger.handlers.clear()
     logger.addHandler(manejador)

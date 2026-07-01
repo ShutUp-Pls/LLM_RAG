@@ -73,7 +73,8 @@ class QwenLocal(BaseLLM):
         prompt_sistema_router = construir_prompt_enrutador(
             evaluar_rag=evaluar_rag, 
             evaluar_intencion=evaluar_intencion,
-            catalogo_temas=catalogo_temas
+            catalogo_temas=catalogo_temas,
+            modelo="qwen"
         )
         plantilla_router = seleccionar_plantilla_usuario("sin_contexto")
         contenido_usuario = plantilla_router.format(consulta=consulta)
@@ -105,7 +106,7 @@ class QwenLocal(BaseLLM):
             max_new_tokens=limite_tokens,
             temperature=self.temperatura,
             top_p=self.top_p,
-            do_sample=True
+            do_sample=False
         )
 
     def __extraer_y_decodificar_respuesta(self, tensores_entrada: dict, tensores_salida: torch.Tensor) -> str:
@@ -123,7 +124,7 @@ class QwenLocal(BaseLLM):
         ) -> dict:
         resultados = {}
 
-        match_razonamiento = re.search(r'RAZONAMIENTO:\s*(.*?)(?=\nDECISION:|$)', respuesta_cruda, re.IGNORECASE | re.DOTALL)
+        match_razonamiento = re.search(r'RAZONAMIENTO:\s*(.*?)(?=\nRAG:|$)', respuesta_cruda, re.IGNORECASE | re.DOTALL)
         if match_razonamiento:
             razonamiento_texto = match_razonamiento.group(1).strip()
             logging.debug("Razonamiento del Router: %s", razonamiento_texto)
@@ -133,18 +134,21 @@ class QwenLocal(BaseLLM):
         respuesta_mayus = respuesta_cruda.upper()
         
         if evaluar_rag:
-
-            match_decision = re.search(r'DECISION:\s*RAG:\s*(SI|SÍ|NO)', respuesta_mayus)
+            match_decision = re.search(r'RAG:\s*(SI|SÍ|NO)', respuesta_mayus)
             
             if match_decision:
                 decision = match_decision.group(1)
                 resultados["requiere_rag"] = False if "NO" in decision else True
             else:
-                menciona_rag = "RAG" in respuesta_mayus
-                menciona_no = "NO" in respuesta_mayus
-                menciona_si = "SI" in respuesta_mayus or "SÍ" in respuesta_mayus
-                if menciona_rag and menciona_no and not menciona_si: resultados["requiere_rag"] = False
-                else: resultados["requiere_rag"] = True
+                ultima_linea = respuesta_mayus.split('\n')[-1]
+                menciona_rag = "RAG" in ultima_linea
+                menciona_no = "NO" in ultima_linea
+                menciona_si = "SI" in ultima_linea or "SÍ" in ultima_linea
+                
+                if menciona_rag and menciona_no and not menciona_si: 
+                    resultados["requiere_rag"] = False
+                else: 
+                    resultados["requiere_rag"] = True
             
         if evaluar_intencion:
             if "PREGUNTA" in respuesta_mayus: resultados["intencion"] = "PREGUNTA"
@@ -183,13 +187,13 @@ class QwenLocal(BaseLLM):
     
     def filtrar_catalogo_temas(self, consulta: str, catalogo_completo: str) -> str:
         prompt_sistema_filtro = (
-            "Eres un extractor de información experto y analítico.\n"
-            "Tu tarea es cruzar la consulta del usuario con un catálogo de temas disponibles.\n"
-            "Extrae ÚNICAMENTE los temas del catálogo que tengan relación semántica con la consulta.\n"
-            "Reglas críticas:\n"
-            "1. Responde SOLO con una lista de los temas encontrados, separados por comas.\n"
-            "2. No agregues introducciones, explicaciones, saltos de línea ni puntos finales.\n"
-            "3. Si la consulta es un saludo, una orden de programación, o no tiene relación con ningún tema, responde exactamente: 'Sin coincidencia'.\n"
+            "Eres un extractor de información literal y estricto.\n"
+            "Tu tarea es buscar los conceptos de la consulta dentro del catálogo de temas.\n"
+            "Reglas críticas absolutas:\n"
+            "1. NO INVENTES TEMAS. Solo puedes devolver elementos que existan literalmente en el texto del catálogo.\n"
+            "2. Si un concepto de la consulta no está en el catálogo, ignóralo.\n"
+            "3. Si la consulta es un saludo, charla trivial, o no cruza con ningún tema exacto, responde exactamente: 'Sin coincidencia'.\n"
+            "4. Responde SOLO con la lista de temas encontrados, separados por comas. Sin puntos ni explicaciones.\n"
         )
 
         prompt_usuario = (

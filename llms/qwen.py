@@ -1,3 +1,4 @@
+import re
 import torch
 import warnings
 import logging
@@ -36,9 +37,7 @@ class QwenLocal(BaseLLM):
         
         self.prompt_sistema = construir_prompt_sistema(
             es_corporativo=True,
-            estricto_contexto=False,
-            acusa_contexto_flexible=True,
-            evitar_alucinaciones=True
+            estricto_contexto=True
         )
 
     def __aplicar_configuracion_silencio(self) -> None:
@@ -74,7 +73,8 @@ class QwenLocal(BaseLLM):
         prompt_sistema_router = construir_prompt_enrutador(
             evaluar_rag=evaluar_rag, 
             evaluar_intencion=evaluar_intencion,
-            catalogo_temas=catalogo_temas
+            catalogo_temas=catalogo_temas,
+            modelo="qwen"
         )
         plantilla_router = seleccionar_plantilla_usuario("sin_contexto")
         contenido_usuario = plantilla_router.format(consulta=consulta)
@@ -92,7 +92,12 @@ class QwenLocal(BaseLLM):
         )
 
     def __preparar_tensores_entrada(self, texto_formateado: str) -> dict:
-        return self.tokenizer([texto_formateado], return_tensors="pt").to(self.modelo.device)
+        return self.tokenizer(
+            [texto_formateado], 
+            return_tensors="pt",
+            truncation=True,
+            max_length=4096
+        ).to(self.modelo.device)
 
     def __ejecutar_generacion(self, tensores_entrada: dict, max_new_tokens: int = None) -> torch.Tensor:
         limite_tokens = max_new_tokens if max_new_tokens is not None else self.max_tokens
@@ -101,7 +106,7 @@ class QwenLocal(BaseLLM):
             max_new_tokens=limite_tokens,
             temperature=self.temperatura,
             top_p=self.top_p,
-            do_sample=True
+            do_sample=False
         )
 
     def __extraer_y_decodificar_respuesta(self, tensores_entrada: dict, tensores_salida: torch.Tensor) -> str:
@@ -109,7 +114,7 @@ class QwenLocal(BaseLLM):
         return self.tokenizer.decode(tensores_salida[0][longitud_prompt:], skip_special_tokens=True)
 
     def __calcular_limite_tokens_enrutador(self, evaluar_rag: bool, evaluar_intencion: bool) -> int:
-        return 10 + (10 * sum([evaluar_rag, evaluar_intencion]))
+        return 150 + (25 * sum([evaluar_rag, evaluar_intencion]))
 
     def __procesar_respuesta_enrutador(
             self,
@@ -118,10 +123,32 @@ class QwenLocal(BaseLLM):
             evaluar_intencion: bool
         ) -> dict:
         resultados = {}
+
+        match_razonamiento = re.search(r'RAZONAMIENTO:\s*(.*?)(?=\nRAG:|$)', respuesta_cruda, re.IGNORECASE | re.DOTALL)
+        if match_razonamiento:
+            razonamiento_texto = match_razonamiento.group(1).strip()
+            logging.debug("Razonamiento del Router: %s", razonamiento_texto)
+        else:
+            logging.debug("Razonamiento del Router: (No se detectó la etiqueta esperada) %s", respuesta_cruda)
+
         respuesta_mayus = respuesta_cruda.upper()
         
         if evaluar_rag:
-            resultados["requiere_rag"] = "RAG: SI" in respuesta_mayus
+            match_decision = re.search(r'RAG:\s*(SI|SÍ|NO)', respuesta_mayus)
+            
+            if match_decision:
+                decision = match_decision.group(1)
+                resultados["requiere_rag"] = False if "NO" in decision else True
+            else:
+                ultima_linea = respuesta_mayus.split('\n')[-1]
+                menciona_rag = "RAG" in ultima_linea
+                menciona_no = "NO" in ultima_linea
+                menciona_si = "SI" in ultima_linea or "SÍ" in ultima_linea
+                
+                if menciona_rag and menciona_no and not menciona_si: 
+                    resultados["requiere_rag"] = False
+                else: 
+                    resultados["requiere_rag"] = True
             
         if evaluar_intencion:
             if "PREGUNTA" in respuesta_mayus: resultados["intencion"] = "PREGUNTA"
@@ -144,14 +171,50 @@ class QwenLocal(BaseLLM):
         ) -> dict:
         mensajes = self.__formatear_mensajes_enrutador(consulta, evaluar_rag, evaluar_intencion, catalogo_temas)
         texto_formateado = self.__convertir_mensajes_a_texto(mensajes)
+        
+        logging.debug("Prompt enviado al enrutador:\n%s", texto_formateado)
+        
         tensores_entrada = self.__preparar_tensores_entrada(texto_formateado)
         
         limite_tokens = self.__calcular_limite_tokens_enrutador(evaluar_rag, evaluar_intencion)
         tensores_salida = self.__ejecutar_generacion(tensores_entrada, max_new_tokens=limite_tokens)
         
         respuesta_cruda = self.__extraer_y_decodificar_respuesta(tensores_entrada, tensores_salida)
+
+        logging.debug("Respuesta cruda del LLM (Router): '%s'", respuesta_cruda)
         
         return self.__procesar_respuesta_enrutador(respuesta_cruda, evaluar_rag, evaluar_intencion)
+    
+    def filtrar_catalogo_temas(self, consulta: str, catalogo_completo: str) -> str:
+        prompt_sistema_filtro = (
+            "Eres un extractor de información literal y estricto.\n"
+            "Tu tarea es buscar los conceptos de la consulta dentro del catálogo de temas.\n"
+            "Reglas críticas absolutas:\n"
+            "1. NO INVENTES TEMAS. Solo puedes devolver elementos que existan literalmente en el texto del catálogo.\n"
+            "2. Si un concepto de la consulta no está en el catálogo, ignóralo.\n"
+            "3. Si la consulta es un saludo, charla trivial, o no cruza con ningún tema exacto, responde exactamente: 'Sin coincidencia'.\n"
+            "4. Responde SOLO con la lista de temas encontrados, separados por comas. Sin puntos ni explicaciones.\n"
+        )
+
+        prompt_usuario = (
+            f"CATÁLOGO DE TEMAS:\n{catalogo_completo}\n\n"
+            f"CONSULTA DEL USUARIO:\n{consulta}\n"
+        )
+        
+        mensajes = [
+            {"role": "system", "content": prompt_sistema_filtro},
+            {"role": "user", "content": prompt_usuario}
+        ]
+        
+        texto_formateado = self.__convertir_mensajes_a_texto(mensajes)
+        tensores_entrada = self.__preparar_tensores_entrada(texto_formateado)
+        
+        tensores_salida = self.__ejecutar_generacion(tensores_entrada, max_new_tokens=64)
+        respuesta_cruda = self.__extraer_y_decodificar_respuesta(tensores_entrada, tensores_salida)
+        
+        catalogo_filtrado = respuesta_cruda.strip().strip('.')
+        
+        return catalogo_filtrado if catalogo_filtrado else "Sin coincidencia"
     
     def condensar_contexto(self, consulta: str, contexto_crudo: str) -> str:
         if not contexto_crudo.strip(): return ""

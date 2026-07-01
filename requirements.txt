@@ -25,3 +25,7 @@ chromadb
 langchain-chroma
 langchain-huggingface
 sentence-transformers
+
+# Librerías para el modelo de OpenAI
+openai
+python-dotenv
